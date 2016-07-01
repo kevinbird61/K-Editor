@@ -14,10 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    codeeditor.cpp
+    codeeditor.cpp \
+    lexer.cpp \
+    highlighter.cpp
 
 HEADERS  += mainwindow.h \
-    codeeditor.h
+    codeeditor.h \
+    lexer.h \
+    highlighter.h
 
 FORMS    += mainwindow.ui
 

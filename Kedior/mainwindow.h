@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <QString>
 #include <QMenu>
 #include <QAction>
-#include <QSound>
 #include <codeeditor.h>
+#include <lexer.h>
+#include <highlighter.h>
 
 using namespace std;
 
@@ -23,24 +25,26 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    // For menu bar setting
     void CreateAction();
     void CreateMenu();
-    void Lexical_analysis();
 
 public slots:
-    void Lexer();
+    // For Content
+    void Content();
 
+    // For menu bar setting
     void newFile();
     void saveFile();
 
 private:
     Ui::MainWindow *ui;
-    QString *cur_str;
-    int cur_state;
-    QSound *type_music;
     LineNumberArea *editArea;
     CodeEditor *codeArea;
+    Highlighter *highlighter;
+    Lexer *lex;
 
+    // For menu bar
     QMenu *fileBar;
     QAction *new_file;
     QAction *save_file;

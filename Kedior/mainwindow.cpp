@@ -10,13 +10,10 @@ MainWindow::MainWindow(QWidget *parent) :
     codeArea = new CodeEditor(this);
     codeArea->setFont(QFont("Monospace",12));
     codeArea->setTabStopWidth(codeArea->tabStopWidth()/2);
+    highlighter = new Highlighter(codeArea->document());
     editArea = new LineNumberArea(codeArea);
     this->setCentralWidget(codeArea);
-    connect(codeArea,SIGNAL(textChanged()),this,SLOT(Lexer()));
-
-    cur_str = new QString("");
-    type_music = new QSound(":/baby_cry.wav");
-    cur_state = 0;
+    connect(codeArea,SIGNAL(textChanged()),this,SLOT(Content()));
 
     CreateAction();
     CreateMenu();
@@ -49,28 +46,9 @@ void MainWindow::CreateMenu()
 
 }
 
-void MainWindow::Lexical_analysis()
+void MainWindow::Content()
 {
-    QStringList StrList = cur_str->split(' ',QString::SkipEmptyParts);
-
-    if(cur_state >= StrList.size())
-        if(cur_state > 0) cur_state--;
-
-    for(int i = cur_state ; i < StrList.size() ; i++){
-        if(StrList.at(i) == "kevin"){
-            cout << "He is awesome" << endl;
-            type_music->play();
-            cur_state = i+1;
-        }
-    }
-    //cout << cur_str->toStdString() << endl; For debug
-}
-
-void MainWindow::Lexer()
-{
-    QString *str = new QString(codeArea->toPlainText());
-    cur_str = str;
-    Lexical_analysis();
+    lex = new Lexer( QString(codeArea->toPlainText()) );
 }
 
 void MainWindow::newFile()
